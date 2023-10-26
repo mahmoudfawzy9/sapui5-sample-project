@@ -7,7 +7,56 @@
 	<Shell id="shell">
 		<App id="app">
 			<pages>
+		  <Page title="Bookshop">
+            <content>
+                    <Panel headerText="Hello, Dev! 👋">
+                        <content>
+						<Table 
+    items="{ path: '/Books', parameters: { expand: 'genre' } }">
+    <columns>
+        <Column>
+            <Text text="Book" />
+        </Column>
+        <Column>
+            <Text text="Author" />
+        </Column>
+        <Column>
+            <Text text="Genre" />
+        </Column>
+        <Column>
+            <Text text="Price" />
+        </Column>
+        <Column>
+            <Text text="Stock" />
+        </Column>
+    </columns>
+	 <items>
+        <ColumnListItem 
+            vAlign="Middle"
+            type="Active">
+            <cells>
+                <ObjectIdentifier
+                    title="{title}"/>
+                <Text
+                    text="{author}" />
+                <Text
+                    text="{genre/name}" />
+                <ObjectNumber
+                    number="{price}"
+                    unit="{currency_code}" />
+                <Text
+                    text="{stock}" />
+            </cells>
+        </ColumnListItem>
+    </items>
+	</Table>
+                        </content>
+                    </Panel>
+                </content>
+				
 				<MessagePage showHeader="false" description="More content to come" text="Stay tuned!" icon="sap-icon://home"/>
+			 </Page>
+
 			</pages>
 		</App>
 	</Shell>

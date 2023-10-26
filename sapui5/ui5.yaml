@@ -16,8 +16,9 @@ server:
             - /test-resources
           url: https://ui5.sap.com
         backend:
-          - path: /V2
-            url: https://services.odata.org
+          - path: /v2/browse
+            url: https://developer-advocates-free-tier-central-hana-cloud-instan3b540fd6.cfapps.us10.hana.ondemand.com
+
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
