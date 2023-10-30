@@ -1,63 +1,102 @@
 <mvc:View
-    controllerName="sap.btp.sapui5.controller.View1"
+    controllerName="sap.btp.sapui5.controller.App"
     xmlns:mvc="sap.ui.core.mvc"
      displayBlock="true"
     xmlns="sap.m"
 >
-	<Shell id="shell">
-		<App id="app">
+	<!-- <Shell id="shell"> -->
+		<App id="app" >
 			<pages>
-		  <Page title="Bookshop">
+		  <Page id="page" title="{i18n>Bookshop}">
             <content>
-                    <Panel headerText="Hello, Dev! 👋">
+                    <Panel id="panel" headerText="Hello, Dev! 👋">
                         <content>
-						<Table 
+                        <SearchField id="searchField" liveChange=".onSearch"/>
+<!-- Add id="booksTable" to the <Table /> -->
+						<Table id="booksTable"
     items="{ path: '/Books', parameters: { expand: 'genre' } }">
     <columns>
-        <Column>
-            <Text text="Book" />
+        <Column id="column1">
+            <Text id="bookText" text="Book" />
         </Column>
-        <Column>
-            <Text text="Author" />
+        <Column id="column2">
+            <Text id="authorText" text="Author" />
         </Column>
-        <Column>
-            <Text text="Genre" />
+        <Column id="column3">
+            <Text id="genreText" text="Genre" />
         </Column>
-        <Column>
-            <Text text="Price" />
+        <Column id="column4">
+            <Text id="priceText" text="Price" />
         </Column>
-        <Column>
-            <Text text="Stock" />
+        <Column id="column5">
+            <Text id="stockText" text="Stock" />
         </Column>
     </columns>
 	 <items>
-        <ColumnListItem 
+        <ColumnListItem id="columnList"
             vAlign="Middle"
+		    press=".onSelect"
             type="Active">
             <cells>
-                <ObjectIdentifier
+                <ObjectIdentifier id="bookTitle"
                     title="{title}"/>
-                <Text
+                <Text id="authorName"
                     text="{author}" />
-                <Text
+                <Text id="genreName"
                     text="{genre/name}" />
-                <ObjectNumber
+                <ObjectNumber id="price"
                     number="{price}"
                     unit="{currency_code}" />
-                <Text
-                    text="{stock}" />
+              <ObjectStatus  id="stock"
+    text="{stock}"
+    state="{=
+        ${stock} >= 20
+            ? 'Success'
+        : ${stock} > 0
+            ? 'Warning'
+        : 'Error'}" />
             </cells>
         </ColumnListItem>
     </items>
 	</Table>
+	<FlexBox direction="Column" class="sapUiMediumMarginTop" id="bookDetails">
+
+<FlexBox id="orderFlex" 
+    alignItems="Center"
+    justifyContent="End"
+    class="sapUiMediumMarginBottom orderControls">
+    <Button
+        id="orderBtn"
+        text="Order"
+        press=".onSubmitOrder" 
+         enabled="{
+                                            path: 'stock',
+                                            formatter: '.formatter.inputLowerThanStock'
+                                        }" />
+    <StepInput 
+        id="stepInput"
+        min="1"
+        max="{stock}"
+        textAlign="Center"
+        validationMode="LiveChange" />
+</FlexBox>
+
+    
+    <FlexBox id="detailPage" direction="Column"    >
+        <Title  id="title" text="{title}"  />
+        <Text id="text"
+            text="{descr}"
+            class="sapUiSmallMarginTop" />
+    </FlexBox>
+</FlexBox>
                         </content>
                     </Panel>
                 </content>
 				
-				<MessagePage showHeader="false" description="More content to come" text="Stay tuned!" icon="sap-icon://home"/>
+				<!-- <MessagePage showHeader="false" description="More content to come" text="Stay tuned!" icon="sap-icon://home"/> -->
 			 </Page>
 
 			</pages>
 		</App>
-	</Shell>
+	<!-- </Shell> -->
 </mvc:View>

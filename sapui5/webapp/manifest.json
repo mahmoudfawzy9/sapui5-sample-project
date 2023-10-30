@@ -16,7 +16,7 @@
             "toolsId": "c77b6e9f-567a-4c56-8e63-993f95ac4423"
         },
         "dataSources": {
-            "mainService": {
+            "remote-bookshop": {
                 "uri": "/v2/browse/",
                 "type": "OData",
                 "settings": {
@@ -51,6 +51,7 @@
                 "sap.m": {},
                 "sap.ui.core": {},
                 "sap.f": {},
+                "sap.fe.templates": {},
                 "sap.suite.ui.generic.template": {},
                 "sap.ui.comp": {},
                 "sap.ui.generic.app": {},
@@ -70,7 +71,7 @@
                 }
             },
             "": {
-                "dataSource": "mainService",
+                "dataSource": "remote-bookshop",
                 "preload": true,
                 "settings": {}
             }
@@ -84,6 +85,10 @@
         },
         "routing": {
             "config": {
+                      "flexibleColumnLayout": {
+                    "defaultTwoColumnLayoutType": "TwoColumnsBeginExpanded",
+                    "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+                },
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
                 "async": true,
@@ -91,6 +96,7 @@
                 "controlAggregation": "pages",
                 "controlId": "app",
                 "clearControlAggregation": false
+                
             },
             "routes": [
                 {
@@ -99,15 +105,67 @@
                     "target": [
                         "TargetView1"
                     ]
+                },
+                {
+                    "pattern": ":?query:",
+                    "name": "mainPage",
+                    "target": [
+                        "mainPage"
+                    ]
+                },
+                {
+                    "pattern": "/Books({key}):?query:",
+                    "name": "detailPage",
+                    "target": [
+                        "mainPage",
+                        "detailPage"
+                    ]
                 }
             ],
             "targets": {
+                
                 "TargetView1": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "View1",
                     "viewName": "View1"
+                }
+                ,
+                "mainPage": {
+                    "type": "Component",
+                    "id": "mainPage",
+                    "name": "sap.btp.sapui5",
+                    "options": {
+                        "settings": {
+
+                            "viewName": "sap.btp.sapui5.view.App",
+                            "entitySet": "Books",
+                            "navigation": {
+                                "Books": {
+                                    "detail": {
+                                        "route": "detailPage"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "controlAggregation": "beginColumnPages",
+                    "contextPattern": ""
+                }
+                ,
+                "detailPage": {
+                    "type": "Component",
+                    "id": "detailPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Books",
+                            "navigation": {}
+                        }
+                    },
+                    "controlAggregation": "midColumnPages",
+                    "contextPattern": "/Books({key})"
                 }
             }
         },

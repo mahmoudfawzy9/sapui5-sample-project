@@ -3,10 +3,10 @@
   "authenticationMethod": "route",
   "routes": [
     {
-      "source": "^/V2/(.*)$",
-      "target": "/V2/$1",
-      "destination": "Northwind",
-      "authenticationType": "xsuaa",
+      "source": "^/v2/browse(.*)$",
+      "target": "/v2/browse/$1",
+      "destination": "remote-bookshop",
+      "authenticationType": "none",
       "csrfProtection": false
     },
     {
